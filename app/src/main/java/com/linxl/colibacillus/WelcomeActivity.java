@@ -1,14 +1,18 @@
 package com.linxl.colibacillus;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Window;
+
+import com.linxl.colibacillus.Util.Config;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,6 +26,9 @@ import static com.linxl.colibacillus.Util.Config.ResultDir;
 
 public class WelcomeActivity extends AppCompatActivity {
 
+    private MyApp myApp;
+    private WelcomeThread thread;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +36,37 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         createFileFord();
         applePermission();
+        myApp = (MyApp) getApplication();
+        thread = new WelcomeThread(myApp.sharedPreferences.getBoolean(Config.isLogin, false));
+    }
+
+    private class WelcomeThread extends Thread {
+
+        private Boolean isLogin;
+
+        public WelcomeThread(Boolean is) {
+            isLogin = is;
+        }
+
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (isLogin) {
+                Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Intent intent = new Intent(WelcomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+            super.run();
+        }
+
     }
 
     private void applePermission() {
@@ -52,7 +90,15 @@ public class WelcomeActivity extends AppCompatActivity {
         }
         if (permissions.size() > 0) {
             ActivityCompat.requestPermissions(this, permissions.toArray(new String[permissions.size()]), 1);
+        } else {
+            thread.start();
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        thread.start();
     }
 
     private void createFileFord() {//生成存储文件夹

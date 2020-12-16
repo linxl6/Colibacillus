@@ -1,9 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FileActivity">
+    android:orientation="vertical" >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="30dp"
+        android:background="#0070C0"
+        android:textColor="#FFFFFF"
+        android:text="选择配置文件"/>
+    <ListView
+        android:id="@+id/filename"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="6"></ListView>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        >
+        <Button
+            android:onClick="onClick"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/loadFile"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="#FFFFFF"
+            android:textSize="25dp"
+            android:background="@drawable/linxl_btn_login"
+            android:text="下载"/>
+        <Button
+            android:onClick="onClick"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/localfile"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:textColor="#FFFFFF"
+            android:textSize="25dp"
+            android:background="@drawable/linxl_btn_login"
+            android:text="本地"/>
+    </LinearLayout>
+</LinearLayout>
