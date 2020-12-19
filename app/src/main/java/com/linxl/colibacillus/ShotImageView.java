@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -33,6 +32,8 @@ public class ShotImageView extends View {
     //控件的宽和高
     private float v_width;
     private float v_height;
+    private float xRatio = 1; //图片与控件长宽的比例
+    private float yRatio = 1; //图片与控件长宽的比例
     //手势选中的点 标记
     private int select_index = 0;
 
@@ -55,8 +56,8 @@ public class ShotImageView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         v_width = this.getWidth(); //获取当前View的宽
         v_height = this.getHeight(); //获取当前View的高
-        dot1.x = v_width / 2 - 250;  //点1 x轴坐标
-        dot1.y = v_height / 2 + 250; //点1 y轴坐标
+        dot1.x = 0;  //点1 x轴坐标
+        dot1.y = 0; //点1 y轴坐标
         dot2.x = dot1.x + 300;
         dot2.y = dot1.y;
         dot3.x = dot1.x;
@@ -110,6 +111,8 @@ public class ShotImageView extends View {
             Rect src = new Rect(0, 0, background.getWidth(), background.getHeight());
             // 指定图片在屏幕上显示的区域
             Rect dst = new Rect(0, 0, (int) v_width, (int) v_height);
+            xRatio = (float) background.getWidth() / v_width;//mRealImgShowWidth=ImageView.getWidth()
+            yRatio = (float) background.getHeight() / v_height;
             canvas.drawBitmap(background, src, dst, null);
         }
     }
@@ -215,13 +218,18 @@ public class ShotImageView extends View {
 
     //获取剪切的图片
     public Bitmap getBitmap() {
-        int x = (int) Math.max(dot1.x, dot3.x);
-        int y = (int) Math.min(dot1.y, dot2.y);
-        int width = (int) Math.min(dot2.x, dot4.x) - (int) Math.max(dot1.x, dot3.x);
-        int height = (int) Math.max(dot3.y, dot4.y) - (int) Math.min(dot1.y, dot2.y);
-        Log.d("shotView", "getBitmap: " + width + " " + height);
-        Log.d("shotView", "getBitmap: " + x + " " + y);
-        return Bitmap.createBitmap(background, x, y, width, height);
+        int x = (int) Math.max(dot1.x * xRatio, dot3.x * xRatio);
+        int y = (int) Math.min(dot1.y * yRatio, dot2.y * yRatio);
+        int width = (int) Math.min(dot2.x * xRatio, dot4.x * xRatio) - (int) Math.max(dot1.x * xRatio, dot3.x * xRatio);
+        int height = (int) Math.max(dot3.y * yRatio, dot4.y * yRatio) - (int) Math.min(dot1.y * yRatio, dot2.y * yRatio);
+//        Log.d("shotView", "getBitmap: " + width + " " + height);
+//        Log.d("shotView", "getBitmap: " + x + " " + y);
+        //长宽大于0
+        if (width > 0 && height > 0 && background != null) {
+            return Bitmap.createBitmap(background, x, y, width, height);
+        } else {
+            return null;
+        }
     }
 
 }

@@ -80,6 +80,7 @@
             android:onClick="onClick"
             android:text="设置阈值"
             android:textColor="#FFFFFF"
+            android:visibility="gone"
             android:textSize="25dp" />
         <Button
             android:layout_below="@id/btn_change_threshold"

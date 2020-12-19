@@ -37,7 +37,7 @@ public class WelcomeActivity extends AppCompatActivity {
         createFileFord();
         applePermission();
         myApp = (MyApp) getApplication();
-        thread = new WelcomeThread(myApp.sharedPreferences.getBoolean(Config.isLogin, false));
+        thread = new WelcomeThread(myApp.sharedPreferences.getBoolean(Config.isLogin, true));
     }
 
     private class WelcomeThread extends Thread {

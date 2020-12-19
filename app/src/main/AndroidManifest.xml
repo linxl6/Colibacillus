@@ -20,22 +20,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".LogicActivity"></activity>
         <activity android:name=".WelcomeActivity">
-        </activity>
-        <activity android:name=".ResultActivity" />
-        <activity android:name=".PrepareActivity" />
-        <activity android:name=".CameraActivity"></activity>
-        <activity android:name=".FileActivity" />
-        <activity android:name=".LoginActivity">
-
-        </activity>
-        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ResultActivity" />
+        <activity android:name=".PrepareActivity" />
+        <activity android:name=".CameraActivity" />
+        <activity android:name=".FileActivity" />
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".MainActivity">
+        </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.mydemo.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true"
+            tools:ignore="WrongManifestParent">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

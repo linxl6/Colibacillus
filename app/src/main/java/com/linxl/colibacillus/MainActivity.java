@@ -44,18 +44,20 @@ public class MainActivity extends AppCompatActivity {
 //                    //overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
 //                    finish();
 //                }
+                Intent cameraIntent = new Intent(MainActivity.this, PrepareActivity.class);
+                startActivity(cameraIntent);
                 break;
             case R.id.btn_change_config:
                 Intent configIntent = new Intent(MainActivity.this, FileActivity.class);
                 startActivity(configIntent);
                 //overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-                finish();
+                //finish();
                 break;
             case R.id.btn_open_logic:
-//                Intent logicIntent = new Intent(SelectMenu.this, LogicPhoto.class);
-//                startActivity(logicIntent);
-//                //overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
-//                finish();
+                Intent logicIntent = new Intent(MainActivity.this, LogicActivity.class);
+                startActivity(logicIntent);
+                //overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+                //finish();
                 break;
             case R.id.btn_change_user:
                 //清空SharedPreferences中的数据，并跳转回登陆界面
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 //                break;
             case R.id.btn_logout:
                 finish();
+                System.exit(0);
                 break;
         }
     }
