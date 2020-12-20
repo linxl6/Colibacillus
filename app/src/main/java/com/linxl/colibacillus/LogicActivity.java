@@ -32,7 +32,11 @@ public class LogicActivity extends AppCompatActivity {
 
         lv_photo = findViewById(R.id.lv_photo);
         myApp = (MyApp) getApplication();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
         File dir = new File(path);
         if (dir.isDirectory()) {
             File[] file = dir.listFiles();
@@ -42,7 +46,7 @@ public class LogicActivity extends AppCompatActivity {
                     subfilelist[i] = file[i].getName();
                 }
                 lv_photo.setAdapter(new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, subfilelist));
-                subfilelist = null;
+                //subfilelist = null;
                 lv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                     @Override
@@ -57,6 +61,10 @@ public class LogicActivity extends AppCompatActivity {
                 });
             }
         }
+    }
+
+    public void onBack(View view) {
+        finish();
     }
 
 //    //获取按键信息

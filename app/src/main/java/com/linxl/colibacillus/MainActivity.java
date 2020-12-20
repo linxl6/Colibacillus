@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 //获取解析的list
                 String string = FileUtil.readPoint(filePath + File.separator + fileName);
-                if (string != "") {
+                if (!string.equalsIgnoreCase("")) {
                     Gson gson = new Gson();
                     Type userListType = new TypeToken<ArrayList<ConfigItem>>() {
                     }.getType();

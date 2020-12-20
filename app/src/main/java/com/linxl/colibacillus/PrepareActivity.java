@@ -138,4 +138,8 @@ public class PrepareActivity extends AppCompatActivity {
         String time = format.format(date);
         return time;
     }
+
+    public void onBack(View view) {
+        finish();
+    }
 }

@@ -39,28 +39,28 @@ public class MyApp extends Application {
         super.onCreate();
         sharedPreferences = getSharedPreferences(ConfigName, MODE_PRIVATE);
         String dot1String = sharedPreferences.getString(DOT1, "");
-        if (dot1String != "") {
+        if (!dot1String.equalsIgnoreCase("")) {
             dot1 = gson.fromJson(dot1String, ImagePoint.class);
         } else {
             dot1.x = 0;  //点1 x轴坐标
             dot1.y = 0; //点1 y轴坐标
         }
         String dot2String = sharedPreferences.getString(DOT2, "");
-        if (dot1String != "") {
+        if (!dot2String.equalsIgnoreCase("")) {
             dot2 = gson.fromJson(dot2String, ImagePoint.class);
         } else {
             dot2.x = dot1.x + 300;
             dot2.y = dot1.y;
         }
         String dot3String = sharedPreferences.getString(DOT3, "");
-        if (dot1String != "") {
+        if (!dot3String.equalsIgnoreCase("")) {
             dot3 = gson.fromJson(dot3String, ImagePoint.class);
         } else {
             dot3.x = dot1.x;
             dot3.y = dot1.y + 300;
         }
         String dot4String = sharedPreferences.getString(DOT4, "");
-        if (dot1String != "") {
+        if (!dot4String.equalsIgnoreCase("")) {
             dot4 = gson.fromJson(dot4String, ImagePoint.class);
         } else {
             dot4.x = dot2.x;

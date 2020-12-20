@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -23,6 +24,7 @@ import com.linxl.colibacillus.model.ConfigItem;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,7 +65,7 @@ public class ConfigActivity extends AppCompatActivity implements ConfigAdapter.I
             try {
                 //获取解析的list
                 String string = FileUtil.readPoint(filePath + File.separator + fileName);
-                if (string != "") {
+                if (!string.equalsIgnoreCase("")) {
                     Gson gson = new Gson();
                     Type userListType = new TypeToken<ArrayList<ConfigItem>>() {
                     }.getType();
@@ -101,7 +103,7 @@ public class ConfigActivity extends AppCompatActivity implements ConfigAdapter.I
                                 ConfigItem item = new ConfigItem();
                                 item.configName = string;
                                 item.index = configList.get(finalPosition).index;
-                                configList.set(finalPosition,item);
+                                configList.set(finalPosition, item);
                                 configAdapter.notifyDataSetChanged();
                             }
                         });
@@ -125,16 +127,48 @@ public class ConfigActivity extends AppCompatActivity implements ConfigAdapter.I
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Field field = null;
+
+                        try {
+                            //通过反射获取dialog中的私有属性mShowing
+                            field = dialog.getClass().getSuperclass().getDeclaredField("mShowing");
+                            field.setAccessible(true);//设置该属性可以访问
+                        } catch (Exception ex) {
+
+                        }
+
                         // 获取EditView中的输入内容
                         String string = editText.getText().toString();
-                        int index = (int) new Date().getTime();
-                        ConfigItem item = new ConfigItem();
-                        item.configName = string;
-                        item.index = index;
-                        configList.add(item);
-                        configAdapter.notifyDataSetChanged();
+                        if (!string.equalsIgnoreCase("")) {
+                            int index = (int) new Date().getTime();
+                            ConfigItem item = new ConfigItem();
+                            item.configName = string;
+                            item.index = index;
+                            configList.add(item);
+                            configAdapter.notifyDataSetChanged();
+                            try {
+                                //设置dialog不可关闭
+                                field.set(dialog, true);
+                                dialog.dismiss();
+                            } catch (Exception ex) {
+                            }
+                        } else {
+                            Toast.makeText(ConfigActivity.this, "请输入正确的配置", Toast.LENGTH_SHORT).show();
+                            try {
+                                //设置dialog不可关闭
+                                field.set(dialog, false);
+                                dialog.dismiss();
+                            } catch (Exception ex) {
+                            }
+                        }
                     }
                 });
+        customizeDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
         customizeDialog.show();
     }
 
@@ -145,5 +179,9 @@ public class ConfigActivity extends AppCompatActivity implements ConfigAdapter.I
             myApp.configList = configList;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void onBack(View view) {
+        finish();
     }
 }
