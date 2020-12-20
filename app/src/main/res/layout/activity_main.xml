@@ -2,74 +2,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="#FFFFFF" >
+    android:background="#FFFFFF"
+    tools:context=".MainActivity">
+
     <TextView
         android:id="@+id/linxl_tv_select"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textSize="30dp"
         android:background="#0070C0"
+        android:gravity="center"
+        android:text="选择菜单"
         android:textColor="#FFFFFF"
-        android:text="选择菜单"/>
+        android:textSize="30dp" />
+
     <RelativeLayout
-        android:layout_below="@id/linxl_tv_select"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:layout_below="@id/linxl_tv_select"
         android:paddingLeft="50dp"
+        android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingRight="50dp"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:paddingBottom="@dimen/activity_vertical_margin">
+
         <ImageView
-            android:layout_centerHorizontal="true"
             android:id="@+id/img_logo_show"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:background="@drawable/logo"
-            />
-        <TextView
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/img_logo_show"
+            android:background="@drawable/logo" />
+
+        <TextView
             android:id="@+id/show_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
-            android:text="用户名："/>
+            android:layout_below="@id/img_logo_show"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="用户名："
+            android:textSize="25dp" />
+
         <Button
-            android:layout_marginTop="20dp"
-            android:layout_below="@id/show_user_name"
             android:id="@+id/btn_camera_begin"
-            android:layout_height="45dp"
             android:layout_width="match_parent"
-            android:onClick="onClick"
-            android:textColor="#FFFFFF"
-            android:textSize="25dp"
+            android:layout_height="45dp"
+            android:layout_below="@id/show_user_name"
+            android:layout_marginTop="20dp"
             android:background="@drawable/linxl_btn_login"
-            android:text="数据采集"/>
+            android:onClick="onClick"
+            android:text="数据采集"
+            android:textColor="#FFFFFF"
+            android:textSize="25dp" />
+
         <Button
+            android:id="@+id/btn_change_config"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_below="@id/btn_camera_begin"
             android:layout_marginTop="10dp"
-            android:id="@+id/btn_change_config"
-            android:layout_height="45dp"
-            android:layout_width="match_parent"
-            android:onClick="onClick"
-            android:textColor="#FFFFFF"
-            android:textSize="25dp"
             android:background="@drawable/linxl_btn_login"
-            android:text="芯片型号"/>
+            android:onClick="onClick"
+            android:text="参数配置"
+            android:textColor="#FFFFFF"
+            android:textSize="25dp" />
+
         <Button
-            android:layout_below="@id/btn_change_config"
             android:id="@+id/btn_open_logic"
-            android:layout_marginTop="10dp"
-            android:layout_height="45dp"
             android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/btn_change_config"
+            android:layout_marginTop="10dp"
             android:background="@drawable/linxl_btn_login"
             android:onClick="onClick"
+            android:text="本地结果"
             android:textColor="#FFFFFF"
-            android:textSize="25dp"
-            android:text="本地结果"/>
+            android:textSize="25dp" />
+
         <Button
             android:id="@+id/btn_change_threshold"
             android:layout_width="match_parent"
@@ -80,30 +87,34 @@
             android:onClick="onClick"
             android:text="设置阈值"
             android:textColor="#FFFFFF"
-            android:visibility="gone"
-            android:textSize="25dp" />
+            android:textSize="25dp"
+            android:visibility="gone" />
+
         <Button
-            android:layout_below="@id/btn_change_threshold"
             android:id="@+id/btn_change_user"
-            android:layout_marginTop="10dp"
-            android:layout_height="45dp"
             android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/btn_change_threshold"
+            android:layout_marginTop="10dp"
             android:background="@drawable/linxl_btn_login"
             android:onClick="onClick"
+            android:text="切换用户"
             android:textColor="#FFFFFF"
             android:textSize="25dp"
-            android:text="切换用户"/>
+            android:visibility="gone"
+            />
+
         <Button
-            android:layout_below="@id/btn_change_user"
             android:id="@+id/btn_logout"
-            android:layout_marginTop="10dp"
-            android:layout_height="45dp"
             android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/btn_change_user"
+            android:layout_marginTop="10dp"
             android:background="@drawable/linxl_btn_login"
             android:onClick="onClick"
+            android:text="退     出"
             android:textColor="#FFFFFF"
-            android:textSize="25dp"
-            android:text="退     出"/>
+            android:textSize="25dp" />
 
     </RelativeLayout>
 

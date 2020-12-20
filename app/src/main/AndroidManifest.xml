@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.linxl.colibacillus">
 
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -20,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".LogicActivity"></activity>
+        <activity android:name=".ConfigActivity"></activity>
+        <activity android:name=".LogicActivity" />
         <activity android:name=".WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,9 +34,9 @@
         <activity android:name=".PrepareActivity" />
         <activity android:name=".CameraActivity" />
         <activity android:name=".FileActivity" />
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".MainActivity"></activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.mydemo.fileprovider"

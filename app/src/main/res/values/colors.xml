@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="transparent_gray">#83F1F1F1</color>
     <color name="transparent_paint">#CDFFFFFF</color>
+    <color name="theme_red">#fff</color>
 </resources>

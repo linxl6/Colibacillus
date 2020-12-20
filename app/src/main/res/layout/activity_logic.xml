@@ -12,7 +12,7 @@
         android:textSize="30dp"
         android:background="#0070C0"
         android:textColor="#FFFFFF"
-        android:text="本地文件"/>
+        android:text="本地结果"/>
     <LinearLayout
         android:id="@+id/linxl_logic_photo"
         android:layout_width="match_parent"

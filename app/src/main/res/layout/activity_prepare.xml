@@ -12,7 +12,7 @@
         android:textSize="30dp"
         android:background="#0070C0"
         android:textColor="#FFFFFF"
-        android:text="掌上生物芯片检测软件"/>
+        android:text="样本选择"/>
 
     <LinearLayout
         android:layout_marginLeft="30dp"
@@ -35,13 +35,13 @@
                 android:textSize="23dp"
                 android:textColor="#0070C0"
                 android:text="检测名称"/>
-            <EditText
+            <Spinner
                 android:singleLine="true"
                 android:id="@+id/de_name"
+                android:spinnerMode="dialog"
                 android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/bg_edittext"
                 android:gravity="center"/>
         </LinearLayout>
         <LinearLayout

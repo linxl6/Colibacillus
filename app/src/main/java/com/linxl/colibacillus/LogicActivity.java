@@ -53,21 +53,20 @@ public class LogicActivity extends AppCompatActivity {
                         intent.putExtra("fileName", filename.replace(".txt", ""));
                         myApp.dName = filename.replace(".txt", "");
                         startActivity(intent);
-                        finish();
                     }
                 });
             }
         }
     }
 
-    //获取按键信息
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent intent = new Intent(LogicActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    //获取按键信息
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            Intent intent = new Intent(LogicActivity.this, MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        >
+        <Button
+            android:textColor="#1A21D1"
+            android:gravity="center_vertical"
+            android:id="@+id/config_edit"
+            android:background="@drawable/border_line_while"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="编辑"
+            android:textSize="20dp" />
+
+        <Button
+            android:textColor="#FF0000"
+            android:gravity="center_vertical"
+            android:id="@+id/config_delete"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_line_while"
+            android:text="删除"
+            android:textSize="20dp"
+            android:layout_marginRight="12dp"/>
+    </LinearLayout>
+</RelativeLayout>

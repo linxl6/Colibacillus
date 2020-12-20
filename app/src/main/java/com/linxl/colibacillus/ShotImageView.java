@@ -1,6 +1,7 @@
 package com.linxl.colibacillus;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -12,15 +13,18 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.Gson;
+import com.linxl.colibacillus.Util.FileUtil;
+import com.linxl.colibacillus.Util.ImageUtil;
 import com.linxl.colibacillus.model.ImagePoint;
 
 public class ShotImageView extends View {
 
-    private Bitmap background;
-    private ImagePoint dot1 = new ImagePoint();
-    private ImagePoint dot2 = new ImagePoint();
-    private ImagePoint dot3 = new ImagePoint();
-    private ImagePoint dot4 = new ImagePoint();
+    public Bitmap background;
+    public ImagePoint dot1 = new ImagePoint();
+    public ImagePoint dot2 = new ImagePoint();
+    public ImagePoint dot3 = new ImagePoint();
+    public ImagePoint dot4 = new ImagePoint();
 
     //触摸事件的坐标
     private float event_x;
@@ -32,12 +36,14 @@ public class ShotImageView extends View {
     //控件的宽和高
     private float v_width;
     private float v_height;
-    private float xRatio = 1; //图片与控件长宽的比例
-    private float yRatio = 1; //图片与控件长宽的比例
+    public float xRatio = 1; //图片与控件长宽的比例
+    public float yRatio = 1; //图片与控件长宽的比例
     //手势选中的点 标记
     private int select_index = 0;
 
     private static float raduis = 25f;
+
+    private MyApp myApp = null;
 
     public ShotImageView(Context context) {
         super(context);
@@ -56,14 +62,21 @@ public class ShotImageView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         v_width = this.getWidth(); //获取当前View的宽
         v_height = this.getHeight(); //获取当前View的高
-        dot1.x = 0;  //点1 x轴坐标
-        dot1.y = 0; //点1 y轴坐标
-        dot2.x = dot1.x + 300;
-        dot2.y = dot1.y;
-        dot3.x = dot1.x;
-        dot3.y = dot1.y + 300;
-        dot4.x = dot2.x;
-        dot4.y = dot2.y + 300;
+        if (myApp != null) {
+            dot1 = myApp.dot1;
+            dot2 = myApp.dot2;
+            dot3 = myApp.dot3;
+            dot4 = myApp.dot4;
+        } else {
+            dot1.x = 0;  //点1 x轴坐标
+            dot1.y = 0; //点1 y轴坐标
+            dot2.x = dot1.x + 300;
+            dot2.y = dot1.y;
+            dot3.x = dot1.x;
+            dot3.y = dot1.y + 300;
+            dot4.x = dot2.x;
+            dot4.y = dot2.y + 300;
+        }
         //封装坐标点数组
         pts = getPts();
     }
@@ -105,14 +118,24 @@ public class ShotImageView extends View {
         invalidate();
     }
 
+    public void setMyApp(MyApp app) {
+        myApp = app;
+        dot1 = myApp.dot1;
+        dot2 = myApp.dot2;
+        dot3 = myApp.dot3;
+        dot4 = myApp.dot4;
+        invalidate();
+    }
+
     private void drawBitmap(Canvas canvas) {
         if (background != null) {
             // 指定图片绘制区域(左上角的四分之一)
             Rect src = new Rect(0, 0, background.getWidth(), background.getHeight());
             // 指定图片在屏幕上显示的区域
-            Rect dst = new Rect(0, 0, (int) v_width, (int) v_height);
             xRatio = (float) background.getWidth() / v_width;//mRealImgShowWidth=ImageView.getWidth()
-            yRatio = (float) background.getHeight() / v_height;
+            int r_height = (int) (v_width * background.getHeight() / background.getWidth());
+            yRatio = (float) background.getHeight() / r_height;
+            Rect dst = new Rect(0, 0, (int) v_width, r_height);
             canvas.drawBitmap(background, src, dst, null);
         }
     }
@@ -218,6 +241,17 @@ public class ShotImageView extends View {
 
     //获取剪切的图片
     public Bitmap getBitmap() {
+        myApp.dot1 = dot1;
+        myApp.dot2 = dot2;
+        myApp.dot3 = dot3;
+        myApp.dot4 = dot4;
+        SharedPreferences.Editor editor = myApp.sharedPreferences.edit();
+        Gson gson = new Gson();
+        editor.putString(myApp.DOT1, gson.toJson(myApp.dot1));
+        editor.putString(myApp.DOT2, gson.toJson(myApp.dot2));
+        editor.putString(myApp.DOT3, gson.toJson(myApp.dot3));
+        editor.putString(myApp.DOT4, gson.toJson(myApp.dot4));
+        editor.commit();
         int x = (int) Math.max(dot1.x * xRatio, dot3.x * xRatio);
         int y = (int) Math.min(dot1.y * yRatio, dot2.y * yRatio);
         int width = (int) Math.min(dot2.x * xRatio, dot4.x * xRatio) - (int) Math.max(dot1.x * xRatio, dot3.x * xRatio);
@@ -229,6 +263,16 @@ public class ShotImageView extends View {
             return Bitmap.createBitmap(background, x, y, width, height);
         } else {
             return null;
+        }
+    }
+
+    public class saveBitmapThread extends Thread {
+
+        private Bitmap background;
+
+        @Override
+        public void run() {
+            super.run();
         }
     }
 

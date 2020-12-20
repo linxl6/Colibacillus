@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Window;
+import android.widget.TextView;
 
 import com.linxl.colibacillus.Util.Config;
 
@@ -34,10 +35,10 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_welcome);
-        createFileFord();
-        applePermission();
         myApp = (MyApp) getApplication();
         thread = new WelcomeThread(myApp.sharedPreferences.getBoolean(Config.isLogin, true));
+        createFileFord();
+        applePermission();
     }
 
     private class WelcomeThread extends Thread {
@@ -103,19 +104,20 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void createFileFord() {//生成存储文件夹
         // TODO Auto-generated method stub
-        File dir = new File(BasicDir);
+        String path = Environment.getExternalStorageDirectory() + File.separator;
+        File dir = new File(path+BasicDir);
         if (!dir.exists()) {
             dir.mkdir();
         }
-        File f = new File(ImageDir);
+        File f = new File(path+ImageDir);
         if (!f.exists()) {
             f.mkdir();
         }
-        File file = new File(ResultDir);
+        File file = new File(path+ResultDir);
         if (!file.exists()) {
             file.mkdir();
         }
-        File file1 = new File(ConfigDir);
+        File file1 = new File(path+ConfigDir);
         if (!file1.exists()) {
             file1.mkdir();
         }

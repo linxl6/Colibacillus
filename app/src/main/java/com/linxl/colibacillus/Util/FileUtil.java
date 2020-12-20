@@ -1,6 +1,5 @@
 package com.linxl.colibacillus.Util;
 
-import android.os.Environment;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -25,17 +24,12 @@ public class FileUtil {
             buff = new BufferedOutputStream(fos);
             buff.write(bytes);
             buff.flush();
+            fos.close();
+            buff.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            try {
-                fos.close();
-                buff.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 

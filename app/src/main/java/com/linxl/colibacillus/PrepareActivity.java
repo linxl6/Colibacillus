@@ -13,7 +13,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.linxl.colibacillus.Util.Config;
@@ -31,12 +33,13 @@ import java.util.List;
  */
 public class PrepareActivity extends AppCompatActivity {
 
-    private EditText de_name;
+    private Spinner de_name;
     public static final int TAKE_PHOTO = 1;
     private Uri imageUri;
     private String dName = "";
     private MyApp myApp;
     private String time = "";
+    private SpinnerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +47,35 @@ public class PrepareActivity extends AppCompatActivity {
         setContentView(R.layout.activity_prepare);
         de_name = findViewById(R.id.de_name);
         myApp = (MyApp) getApplication();
+        adapter = new SpinnerAdapter(this, myApp.configList);
+        de_name.setAdapter(adapter);
+        de_name.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                dName = myApp.configList.get(position).configName;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                dName = "";
+            }
+        });
         time = getdate();
     }
 
     public void onClick(View view) {
         //
-        String name = de_name.getText().toString();
-        if (name != "" && name != null) {
-            dName = name + "-" + time;
-            myApp.dName = dName;
+        if (dName != "" && dName != null) {
+            myApp.initName = dName;
+            myApp.dName = dName + "-" + time;
             requestCamera();
         } else {
-            Toast.makeText(this, "请输入检测名称", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请选择样本类型", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void requestCamera() {
-        String filePath = Environment.getExternalStorageDirectory() + File.separator + Config.ImageDir + File.separator + dName + ".jpg";
+        String filePath = Environment.getExternalStorageDirectory() + File.separator + Config.ImageDir + File.separator + myApp.dName + ".jpg";
         File outputImage = new File(filePath);
                 /*
                 创建一个File文件对象，用于存放摄像头拍下的图片，我们把这个图片命名为output_image.jpg
@@ -104,6 +119,7 @@ public class PrepareActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     Intent intent = new Intent(PrepareActivity.this, CameraActivity.class);
                     startActivity(intent);
+                    finish();
                 }
                 break;
             default:

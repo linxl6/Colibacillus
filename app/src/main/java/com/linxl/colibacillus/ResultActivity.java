@@ -21,6 +21,7 @@ import com.linxl.colibacillus.Util.Upload;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Map;
 
 public class ResultActivity extends AppCompatActivity {
@@ -48,12 +49,16 @@ public class ResultActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        virusCon.setText(myApp.vrius_count + "");
+        DecimalFormat df = new DecimalFormat("0.00E0");
+        System.out.println(df.format(myApp.vrius_count));
+        virusCon.setText(df.format(myApp.vrius_count) + "");
         virusName.setText(myApp.initName);
         String filePath = Environment.getExternalStorageDirectory() + File.separator + Config.ImageDir + File.separator + myApp.dName + ".jpg";
         Bitmap bitmap2 = ImageUtil.getBitmapWithRightRotation(filePath);
-        Bitmap bitmap1 = ImageUtil.compressBitmap(bitmap2, 20);
-        resIv.setImageBitmap(bitmap1);
+        if (bitmap2 != null) {
+            Bitmap bitmap1 = ImageUtil.compressBitmap(bitmap2, 20);
+            resIv.setImageBitmap(bitmap1);
+        }
     }
 
     public void onClick(View view) {
@@ -94,13 +99,13 @@ public class ResultActivity extends AppCompatActivity {
 
     }
 
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            Intent intent = new Intent(ResultActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK) {
+//            Intent intent = new Intent(ResultActivity.this, MainActivity.class);
+//            startActivity(intent);
+//            finish();
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 }
