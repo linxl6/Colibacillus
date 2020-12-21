@@ -147,7 +147,6 @@ public class ConfigActivity extends AppCompatActivity implements ConfigAdapter.I
                             configList.add(item);
                             configAdapter.notifyDataSetChanged();
                             try {
-                                //设置dialog不可关闭
                                 field.set(dialog, true);
                                 dialog.dismiss();
                             } catch (Exception ex) {
@@ -166,7 +165,17 @@ public class ConfigActivity extends AppCompatActivity implements ConfigAdapter.I
         customizeDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Field field = null;
 
+                try {
+                    //通过反射获取dialog中的私有属性mShowing
+                    field = dialog.getClass().getSuperclass().getDeclaredField("mShowing");
+                    field.setAccessible(true);//设置该属性可以访问
+                    field.set(dialog, true);
+                    dialog.dismiss();
+                } catch (Exception ex) {
+
+                }
             }
         });
         customizeDialog.show();
