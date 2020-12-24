@@ -191,6 +191,8 @@ public class ConfigActivity extends AppCompatActivity implements ConfigAdapter.I
     }
 
     public void onBack(View view) {
+        FileUtil.saveFile(new Gson().toJson(configList), filePath, fileName);
+        myApp.configList = configList;
         finish();
     }
 }
